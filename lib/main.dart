@@ -72,6 +72,29 @@ class _TimerScreenState extends State<TimerScreen> {
         body: SafeArea(
           child: Stack(
             children: [
+              Positioned(
+                top: 30,
+                left: 0,
+                right: 0,
+                child: Column(
+                  children: [
+                    Text(
+                      'Crono Wear',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15.0,
+                      ),
+                    ),
+                    SizedBox(
+                        height: 12), // Adjust this height to move the icon down
+                    Icon(
+                      Icons.timer,
+                      color: Colors.white,
+                      size: 20.0,
+                    ),
+                  ],
+                ),
+              ),
               Center(
                 child: Text.rich(
                   TextSpan(
@@ -118,7 +141,7 @@ class _TimerScreenState extends State<TimerScreen> {
                     _isRunning
                         ? Icons.pause_circle_filled
                         : Icons.play_circle_filled,
-                    color: Colors.white.withOpacity(0.6),
+                    color: Colors.white.withOpacity(0.8),
                     size: 80.0,
                   ),
                 ),
