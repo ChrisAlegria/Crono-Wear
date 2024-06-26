@@ -79,17 +79,17 @@ class _TimerScreenState extends State<TimerScreen> {
                 child: Column(
                   children: [
                     Text(
-                      'Crono Wear',
+                      'Cronó Wear',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 15.0,
                       ),
                     ),
                     SizedBox(
-                        height: 12), // Adjust this height to move the icon down
+                        height: 16), // Adjust this height to move the icon down
                     Icon(
                       Icons.timer,
-                      color: Colors.white,
+                      color: const Color.fromARGB(255, 255, 0, 0),
                       size: 20.0,
                     ),
                   ],
@@ -143,6 +143,27 @@ class _TimerScreenState extends State<TimerScreen> {
                         : Icons.play_circle_filled,
                     color: Colors.white.withOpacity(0.8),
                     size: 80.0,
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                left: 10,
+                right: 10,
+                child: GestureDetector(
+                  onTap: _togglePlayPause,
+                  child: Container(
+                    padding: EdgeInsets.all(10.0),
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 39, 39, 39),
+                    ),
+                    child: Center(
+                      child: Icon(
+                        _isRunning ? Icons.pause : Icons.play_arrow,
+                        color: Colors.white,
+                        size: 20.0,
+                      ),
+                    ),
                   ),
                 ),
               ),
