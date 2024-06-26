@@ -110,6 +110,8 @@ class _TimerScreenState extends State<TimerScreen> {
                           shadows: [
                             Shadow(
                               blurRadius: 10.0,
+                              color: _currentColor
+                                  .withOpacity(0.6), // Neon glow color
                               offset: Offset(0, 0),
                             ),
                           ],
@@ -124,6 +126,8 @@ class _TimerScreenState extends State<TimerScreen> {
                           shadows: [
                             Shadow(
                               blurRadius: 10.0,
+                              color: _currentColor
+                                  .withOpacity(0.6), // Neon glow color
                               offset: Offset(0, 0),
                             ),
                           ],
@@ -220,7 +224,7 @@ class _TimerScreenState extends State<TimerScreen> {
   Color _getNextColor(Color currentColor) {
     List<Color> colorList = [
       Color.fromARGB(255, 27, 255, 35),
-      Colors.blue,
+      const Color.fromARGB(255, 33, 215, 243),
       const Color.fromARGB(255, 198, 38, 226),
       const Color.fromARGB(255, 255, 25, 9),
       const Color.fromARGB(255, 255, 199, 29),
