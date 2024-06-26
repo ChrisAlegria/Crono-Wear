@@ -53,6 +53,7 @@ class _TimerScreenState extends State<TimerScreen> {
   late String _strCount;
   late bool _isRunning;
   late double _iconOpacity;
+  Color _currentColor = Colors.amber; // Initial color
 
   @override
   void initState() {
@@ -90,7 +91,7 @@ class _TimerScreenState extends State<TimerScreen> {
                         height: 5), // Adjust this height to move the icon down
                     Icon(
                       Icons.timer,
-                      color: const Color.fromARGB(255, 255, 0, 0),
+                      color: _currentColor,
                       size: 17.0,
                     ),
                   ],
@@ -103,13 +104,12 @@ class _TimerScreenState extends State<TimerScreen> {
                       TextSpan(
                         text: _strCount.substring(0, _strCount.length - 1),
                         style: TextStyle(
-                          color: const Color.fromARGB(255, 255, 0, 0),
+                          color: _currentColor,
                           fontSize: 30.0,
                           fontFamily: 'Digital',
                           shadows: [
                             Shadow(
                               blurRadius: 10.0,
-                              color: Colors.red.withOpacity(0.6),
                               offset: Offset(0, 0),
                             ),
                           ],
@@ -118,13 +118,12 @@ class _TimerScreenState extends State<TimerScreen> {
                       TextSpan(
                         text: _strCount.substring(_strCount.length - 1),
                         style: TextStyle(
-                          color: const Color.fromARGB(255, 255, 0, 0),
+                          color: _currentColor,
                           fontSize: 20.0,
                           fontFamily: 'Digital',
                           shadows: [
                             Shadow(
                               blurRadius: 10.0,
-                              color: Colors.red.withOpacity(0.6),
                               offset: Offset(0, 0),
                             ),
                           ],
@@ -209,8 +208,27 @@ class _TimerScreenState extends State<TimerScreen> {
             (second < 10 ? "0$second" : "$second") +
             "." +
             "$millisecond"; // Showing only the first digit of milliseconds
+
+        // Change color every minute (60 seconds)
+        if (second == 0 && millisecond == 0) {
+          _currentColor = _getNextColor(_currentColor);
+        }
       });
     });
+  }
+
+  Color _getNextColor(Color currentColor) {
+    List<Color> colorList = [
+      Color.fromARGB(255, 27, 255, 35),
+      Colors.blue,
+      const Color.fromARGB(255, 198, 38, 226),
+      const Color.fromARGB(255, 255, 25, 9),
+      const Color.fromARGB(255, 255, 199, 29),
+    ];
+
+    int currentIndex = colorList.indexOf(currentColor);
+    int nextIndex = (currentIndex + 1) % colorList.length;
+    return colorList[nextIndex];
   }
 
   @override
