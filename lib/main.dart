@@ -73,7 +73,7 @@ class _TimerScreenState extends State<TimerScreen> {
           child: Stack(
             children: [
               Positioned(
-                top: 30,
+                top: 27,
                 left: 0,
                 right: 0,
                 child: Column(
@@ -83,14 +83,15 @@ class _TimerScreenState extends State<TimerScreen> {
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 15.0,
+                        fontWeight: FontWeight.bold, // Bold font weight
                       ),
                     ),
                     SizedBox(
-                        height: 16), // Adjust this height to move the icon down
+                        height: 5), // Adjust this height to move the icon down
                     Icon(
                       Icons.timer,
                       color: const Color.fromARGB(255, 255, 0, 0),
-                      size: 20.0,
+                      size: 17.0,
                     ),
                   ],
                 ),
