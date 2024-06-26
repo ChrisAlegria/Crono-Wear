@@ -159,7 +159,7 @@ class _TimerScreenState extends State<TimerScreen> {
                   child: Container(
                     padding: EdgeInsets.all(10.0),
                     decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 39, 39, 39),
+                      color: Color.fromARGB(255, 28, 28, 28),
                     ),
                     child: Center(
                       child: Icon(
