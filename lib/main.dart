@@ -54,7 +54,7 @@ class _TimerScreenState extends State<TimerScreen> {
   late bool _isRunning;
   late double _iconOpacity;
   Color _currentColor = Colors.amber; // Initial color
-  bool _isDarkMode = true; // Initial mode is dark
+  bool _isDarkMode = false; // Initial mode is light (false)
 
   // Colors for dark and light modes
   List<Color> darkModeColors = [
