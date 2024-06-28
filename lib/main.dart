@@ -58,7 +58,6 @@ class _TimerScreenState extends State<TimerScreen> {
 
   // Colors for dark and light modes
   List<Color> darkModeColors = [
-    Colors.amber,
     Color.fromARGB(255, 27, 255, 35),
     Color.fromARGB(255, 33, 215, 243),
     Color.fromARGB(255, 198, 38, 226),
@@ -66,7 +65,6 @@ class _TimerScreenState extends State<TimerScreen> {
     Color.fromARGB(255, 255, 199, 29),
   ];
   List<Color> lightModeColors = [
-    Color.fromARGB(255, 153, 119, 0),
     Color.fromARGB(255, 0, 128, 0), // Darker green
     Color.fromARGB(255, 0, 104, 119), // Darker blue
     Color.fromARGB(255, 109, 0, 124), // Darker purple
