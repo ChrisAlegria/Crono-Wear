@@ -90,9 +90,9 @@ class _TimerScreenState extends State<TimerScreen> {
                     SizedBox(
                         height: 5), // Adjust this height to move the icon down
                     Icon(
-                      Icons.timer,
+                      _isRunning ? Icons.pause : Icons.play_arrow,
                       color: _currentColor,
-                      size: 17.0,
+                      size: 20.0,
                     ),
                   ],
                 ),
@@ -155,7 +155,7 @@ class _TimerScreenState extends State<TimerScreen> {
                 left: 10,
                 right: 10,
                 child: GestureDetector(
-                  onTap: _togglePlayPause,
+                  onTap: _resetTimer,
                   child: Container(
                     padding: EdgeInsets.all(10.0),
                     decoration: BoxDecoration(
@@ -163,7 +163,7 @@ class _TimerScreenState extends State<TimerScreen> {
                     ),
                     child: Center(
                       child: Icon(
-                        _isRunning ? Icons.pause : Icons.play_arrow,
+                        Icons.replay,
                         color: Colors.white,
                         size: 20.0,
                       ),
@@ -218,6 +218,16 @@ class _TimerScreenState extends State<TimerScreen> {
           _currentColor = _getNextColor(_currentColor);
         }
       });
+    });
+  }
+
+  void _resetTimer() {
+    setState(() {
+      _timer.cancel();
+      _count = 0;
+      _strCount = "00:00:00.0";
+      _isRunning = false;
+      _currentColor = Colors.amber; // Reset color to initial
     });
   }
 
