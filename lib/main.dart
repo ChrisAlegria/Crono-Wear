@@ -54,6 +54,27 @@ class _TimerScreenState extends State<TimerScreen> {
   late bool _isRunning;
   late double _iconOpacity;
   Color _currentColor = Colors.amber; // Initial color
+  bool _isDarkMode = true; // Initial mode is dark
+
+  // Colors for dark and light modes
+  List<Color> darkModeColors = [
+    Colors.amber,
+    Color.fromARGB(255, 27, 255, 35),
+    Color.fromARGB(255, 33, 215, 243),
+    Color.fromARGB(255, 198, 38, 226),
+    Color.fromARGB(255, 255, 25, 9),
+    Color.fromARGB(255, 255, 199, 29),
+  ];
+  List<Color> lightModeColors = [
+    Color.fromARGB(255, 153, 119, 0),
+    Color.fromARGB(255, 0, 128, 0), // Darker green
+    Color.fromARGB(255, 0, 104, 119), // Darker blue
+    Color.fromARGB(255, 109, 0, 124), // Darker purple
+    Color.fromARGB(255, 153, 0, 0), // Darker red
+    Color.fromARGB(255, 153, 119, 0), // Darker yellow
+  ];
+
+  int _colorIndex = 0;
 
   @override
   void initState() {
@@ -69,7 +90,7 @@ class _TimerScreenState extends State<TimerScreen> {
     return GestureDetector(
       onTap: _togglePlayPause,
       child: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: _isDarkMode ? Colors.black : Colors.white,
         body: SafeArea(
           child: Stack(
             children: [
@@ -82,7 +103,7 @@ class _TimerScreenState extends State<TimerScreen> {
                     Text(
                       'Cronó Wear',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: _isDarkMode ? Colors.white : Colors.black,
                         fontSize: 15.0,
                         fontWeight: FontWeight.bold, // Bold font weight
                       ),
@@ -145,7 +166,9 @@ class _TimerScreenState extends State<TimerScreen> {
                     _isRunning
                         ? Icons.pause_circle_filled
                         : Icons.play_circle_filled,
-                    color: Colors.white.withOpacity(0.8),
+                    color: _isDarkMode
+                        ? Colors.white.withOpacity(0.8)
+                        : Colors.black.withOpacity(0.8),
                     size: 80.0,
                   ),
                 ),
@@ -159,12 +182,37 @@ class _TimerScreenState extends State<TimerScreen> {
                   child: Container(
                     padding: EdgeInsets.all(10.0),
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 28, 28, 28),
+                      color: _isDarkMode
+                          ? Color.fromARGB(255, 28, 28, 28)
+                          : Color.fromARGB(255, 220, 220, 220),
                     ),
                     child: Center(
                       child: Icon(
                         Icons.replay,
-                        color: Colors.white,
+                        color: _isDarkMode ? Colors.white : Colors.black,
+                        size: 20.0,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              // Button 1 to toggle mode
+              Positioned(
+                bottom: 10,
+                right: 10,
+                child: GestureDetector(
+                  onTap: _toggleMode,
+                  child: Container(
+                    padding: EdgeInsets.all(10.0),
+                    decoration: BoxDecoration(
+                      color: _isDarkMode
+                          ? Color.fromARGB(255, 28, 28, 28)
+                          : Color.fromARGB(255, 220, 220, 220),
+                    ),
+                    child: Center(
+                      child: Icon(
+                        _isDarkMode ? Icons.brightness_3 : Icons.brightness_7,
+                        color: _isDarkMode ? Colors.white : Colors.black,
                         size: 20.0,
                       ),
                     ),
@@ -215,7 +263,7 @@ class _TimerScreenState extends State<TimerScreen> {
 
         // Change color every minute (60 seconds)
         if (second == 0 && millisecond == 0) {
-          _currentColor = _getNextColor(_currentColor);
+          _updateColor();
         }
       });
     });
@@ -227,22 +275,30 @@ class _TimerScreenState extends State<TimerScreen> {
       _count = 0;
       _strCount = "00:00:00.0";
       _isRunning = false;
-      _currentColor = Colors.amber; // Reset color to initial
+      // Reset colors based on current mode
+      if (_isDarkMode) {
+        _currentColor = darkModeColors[0]; // Reset to first dark mode color
+      } else {
+        _currentColor = lightModeColors[0]; // Reset to first light mode color
+      }
+      _colorIndex = 0;
     });
   }
 
-  Color _getNextColor(Color currentColor) {
-    List<Color> colorList = [
-      Color.fromARGB(255, 27, 255, 35),
-      const Color.fromARGB(255, 33, 215, 243),
-      const Color.fromARGB(255, 198, 38, 226),
-      const Color.fromARGB(255, 255, 25, 9),
-      const Color.fromARGB(255, 255, 199, 29),
-    ];
+  void _updateColor() {
+    _colorIndex = (_colorIndex + 1) % darkModeColors.length;
+    _currentColor = _isDarkMode
+        ? darkModeColors[_colorIndex]
+        : lightModeColors[_colorIndex];
+  }
 
-    int currentIndex = colorList.indexOf(currentColor);
-    int nextIndex = (currentIndex + 1) % colorList.length;
-    return colorList[nextIndex];
+  void _toggleMode() {
+    setState(() {
+      _isDarkMode = !_isDarkMode;
+      _currentColor = _isDarkMode
+          ? darkModeColors[_colorIndex]
+          : lightModeColors[_colorIndex];
+    });
   }
 
   @override
